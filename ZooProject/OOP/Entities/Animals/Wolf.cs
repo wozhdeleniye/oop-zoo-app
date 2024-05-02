@@ -10,7 +10,7 @@
 
     public Wolf(String newName)
     {
-        hunger = 51;
+        hunger = 70;
         status = global::Status.Fulled;
         sound = "Woof wooof WOOOF!";
         name = newName;
@@ -31,10 +31,4 @@
         }
         else status = global::Status.Fulled;
     }
-    public override Status status { get; set; }
-    public override int hunger { get; set; }
-    public override string name { get; set; }
-    public override int age { get; set; }
-
-
 }

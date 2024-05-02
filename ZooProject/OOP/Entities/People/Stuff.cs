@@ -2,9 +2,6 @@
 
 public class Stuff : Human
 {
-    public override string name { get; set; }
-    public override HumanType type { get; set; }
-    public override Gender gender { get; set; }
     public Animal hisAnimal { get; set; }
 
     public Stuff(String name, Gender gender, Animal animal) 
@@ -18,16 +15,16 @@ public class Stuff : Human
     {
         if(hisAnimal != null)
         {
-            if (hisAnimal.status == global::Status.Hungry)
+            if (hisAnimal.GetStatus() == global::Status.Hungry)
             {
-                hisAnimal.hunger += 50;
-                Console.WriteLine("Покормлено животное: " + hisAnimal.name);
+                hisAnimal.Feed(50);
+                Console.WriteLine("Покормлено животное: " + hisAnimal.getName());
             }
         }
     }
-    public String Status()
+    public override String Status()
     {
-        if (gender == Gender.Male) return $"- {name}\n- Мужчина\n- Приглядывает за {hisAnimal.name}";
-        else return name + $", Женщина, \nПриглядывает за {hisAnimal.name}";
+        if (gender == Gender.Male) return $"- {name}\n- Мужчина\n- Приглядывает за {hisAnimal.getName()}";
+        else return name + $", Женщина, \nПриглядывает за {hisAnimal.getName()}";
     }
 }

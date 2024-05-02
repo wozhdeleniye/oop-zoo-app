@@ -81,7 +81,7 @@ namespace ZooProject
                                 Console.WriteLine("Выберите животное:");
                                 foreach (var animal in zoo.animals)
                                 {
-                                    Console.WriteLine($"{animal.name}, 1 - да, 2 - нет");
+                                    Console.WriteLine($"{animal.getName()}, 1 - да, 2 - нет");
                                     int answerAnimalName = Convert.ToInt32(Console.ReadLine());
                                     if (answerAnimalName == 1) {
                                         dir.AddStuff(answerName, gen, animal);
@@ -93,6 +93,7 @@ namespace ZooProject
                                 Console.WriteLine("Выберете действие:");
                                 Console.WriteLine("1. Добавить капибару");
                                 Console.WriteLine("2. Добавить волка");
+                                Console.WriteLine("3. Добавить жирафа");
                                 int answerWhichAnimal = Convert.ToInt32(Console.ReadLine());
                                 int whichAnimal = 2;
                                 switch (answerWhichAnimal)
@@ -102,6 +103,9 @@ namespace ZooProject
                                         break;
                                     case 2:
                                         whichAnimal = 2;
+                                        break;
+                                    case 3:
+                                        whichAnimal = 3;
                                         break;
                                     default:
                                         Console.WriteLine("Ошибка! Введено некорректное число.");
@@ -129,9 +133,9 @@ namespace ZooProject
                                 Console.WriteLine("Выберите кого будете редактировать, 1 - да, 2 - нет");
                                 foreach (var visitor in zoo.people)
                                 {
-                                    if(visitor.type == HumanType.Visitor)
+                                    if(visitor.getType() == HumanType.Visitor)
                                     {
-                                        Console.WriteLine("Имя:" + visitor.name);
+                                        Console.WriteLine("Имя:" + visitor.getName());
                                         int accept = Convert.ToInt32(Console.ReadLine());
                                         if (accept == 1)
                                         {
@@ -164,13 +168,13 @@ namespace ZooProject
                                 Console.WriteLine("Выберите кого будете редактировать, 1 - да, 2 - нет");
                                 foreach (var stuff in zoo.stuff)
                                 {
-                                    if (stuff.type == HumanType.Stuff)
+                                    if (stuff.getType() == HumanType.Stuff)
                                     {
-                                        Console.WriteLine("Имя:" + stuff.name);
+                                        Console.WriteLine("Имя:" + stuff.getName());
                                         int accept = Convert.ToInt32(Console.ReadLine());
                                         if (accept == 1)
                                         {
-                                            Console.WriteLine($"Предыдущее имя: " + stuff.name + " Введите имя:");
+                                            Console.WriteLine($"Предыдущее имя: " + stuff.getName() + " Введите имя:");
                                             answerName = Console.ReadLine();
                                             Console.WriteLine($"Введите пол: 1 - муж, 2 - женщина");
                                             answerGender = Convert.ToInt32(Console.ReadLine());
@@ -192,7 +196,7 @@ namespace ZooProject
                                             Console.WriteLine("Выберите животное:");
                                             foreach (var animal in zoo.animals)
                                             {
-                                                Console.WriteLine($"{animal.name}, 1 - да, 2 - нет");
+                                                Console.WriteLine($"{animal.getName()}, 1 - да, 2 - нет");
                                                 int answerAnimalName = Convert.ToInt32(Console.ReadLine());
                                                 if (answerAnimalName == 1)
                                                 {
@@ -209,7 +213,7 @@ namespace ZooProject
                                 Console.WriteLine("Выберите кого будете редактировать, 1 - да, 2 - нет");
                                 foreach (var animal in zoo.animals)
                                 {
-                                    Console.WriteLine("Имя:" + animal.name);
+                                    Console.WriteLine("Имя:" + animal.getName());
                                     int accept = Convert.ToInt32(Console.ReadLine());
                                     if (accept == 1)
                                     {
@@ -240,9 +244,9 @@ namespace ZooProject
                                 Console.WriteLine("Выберите кого удалить, 1 - да, 2 - нет");
                                 foreach (var person in zoo.people)
                                 {
-                                    if (person.type == HumanType.Visitor)
+                                    if (person.getType() == HumanType.Visitor)
                                     {
-                                        Console.WriteLine("Имя:" + person.name);
+                                        Console.WriteLine("Имя:" + person.getName());
                                         int accept = Convert.ToInt32(Console.ReadLine());
                                         if (accept == 1)
                                         {
@@ -256,9 +260,9 @@ namespace ZooProject
                                 Console.WriteLine("Выберите кого удалить, 1 - да, 2 - нет");
                                 foreach (var person in zoo.stuff)
                                 {
-                                    if (person.type == HumanType.Visitor)
+                                    if (person.getType() == HumanType.Stuff)
                                     {
-                                        Console.WriteLine("Имя:" + person.name);
+                                        Console.WriteLine("Имя:" + person.getName());
                                         int accept = Convert.ToInt32(Console.ReadLine());
                                         if (accept == 1)
                                         {
@@ -272,7 +276,7 @@ namespace ZooProject
                                 Console.WriteLine("Выберите кого удалить, 1 - да, 2 - нет");
                                 foreach (var animal in zoo.animals)
                                 {
-                                    Console.WriteLine("Имя:" + animal.name);
+                                    Console.WriteLine("Имя:" + animal.getName());
                                     int accept = Convert.ToInt32(Console.ReadLine());
                                     if (accept == 1)
                                     {
@@ -300,15 +304,15 @@ namespace ZooProject
                         switch (answerFiveNumber)
                         {
                             case 1:
-                                foreach(var person  in zoo.people)
+                                foreach(var person in zoo.people)
                                 {
-                                    if(person.type == HumanType.Visitor)
+                                    if(person.getType() == HumanType.Visitor)
                                     {
-                                        Console.WriteLine("Имя: " + person.name);
+                                        Console.WriteLine("Имя: " + person.getName());
                                         int accept = Convert.ToInt32(Console.ReadLine());
                                         if (accept == 1)
                                         {
-                                            Console.WriteLine(dir.StatusVisitor(person));
+                                            Console.WriteLine(person.Status());
                                             break;
                                         }
                                     }
@@ -317,11 +321,11 @@ namespace ZooProject
                             case 2:
                                 foreach (var stuff in zoo.stuff)
                                 {
-                                    Console.WriteLine("Имя: " + stuff.name);
+                                    Console.WriteLine("Имя: " + stuff.getName());
                                     int accept = Convert.ToInt32(Console.ReadLine());
                                     if (accept == 1)
                                     {
-                                        Console.WriteLine(dir.StatusStuff(stuff));
+                                        Console.WriteLine(stuff.Status());
                                         break;
                                     }
                                 }
@@ -329,11 +333,11 @@ namespace ZooProject
                             case 3:
                                 foreach (var animal in zoo.animals)
                                 {
-                                    Console.WriteLine("Имя: " + animal.name);
+                                    Console.WriteLine("Имя: " + animal.getName());
                                     int accept = Convert.ToInt32(Console.ReadLine());
                                     if (accept == 1)
                                     {
-                                        Console.WriteLine(animal.Status);
+                                        Console.WriteLine(animal.Status());
                                         break;
                                     }
                                 }
@@ -351,7 +355,7 @@ namespace ZooProject
                         Console.WriteLine("Выберите животное, которое подаст голос: 1 - да, 2 - нет");
                         foreach(var animal in zoo.animals)
                         {
-                            Console.WriteLine("Имя: " + animal.name);
+                            Console.WriteLine("Имя: " + animal.getName());
                             int accept = Convert.ToInt32(Console.ReadLine());
                             if (accept == 1)
                             {

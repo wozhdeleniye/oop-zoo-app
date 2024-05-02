@@ -29,7 +29,7 @@ namespace OOP
                     zoo.animals.Add(new Wolf(name));
                     break;
                 case 3:
-                    zoo.animals.Add(new Wolf(name));
+                    zoo.animals.Add(new Giraffe(name));
                     break;
                 default:
                     Console.WriteLine("Incorrect input");
@@ -47,18 +47,18 @@ namespace OOP
         }
         public void EditVisitor(String name, Gender gender, Human human)
         {
-            human.name = name;
-            human.gender = gender;
+            human.setName(name);
+            human.setGender(gender);
         }
         public void EditStuff(String name, Gender gender, Stuff human, Animal hisAnimal)
         {
-            human.name = name;
-            human.gender = gender;
+            human.setName(name);
+            human.setGender(gender);
             human.hisAnimal = hisAnimal;
         }
         public void EditAnimal(String name, Animal animal)
         {
-            animal.name = name;
+            animal.setName(name);
         }
         public void DeleteVisitor(Human person)
         {

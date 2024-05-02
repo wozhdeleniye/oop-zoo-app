@@ -1,5 +1,4 @@
-﻿
-namespace ZooProject
+﻿namespace ZooProject
 {
     public class Timer
     {

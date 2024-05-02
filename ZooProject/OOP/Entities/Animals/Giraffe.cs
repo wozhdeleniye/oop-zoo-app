@@ -1,4 +1,4 @@
-﻿class Capibara : Animal
+﻿class Giraffe : Animal
 {
     private string sound;
 
@@ -8,24 +8,24 @@
         private set { sound = value; }
     }
 
-    public Capibara(String newName)
+    public Giraffe(String newName)
     {
-        hunger = 40;
+        hunger = 100;
         status = global::Status.Fulled;
-        sound = "......";
+        sound = "Awwww! awww";
         name = newName;
         age = 0;
     }
 
     public override void MakeSound()
     {
-        Console.WriteLine(name + ": "+ sound);
+        Console.WriteLine(name + ": " + sound);
     }
 
     public override void Update()
     {
         hunger -= 1;
-        if (hunger <= 20)
+        if (hunger <= 70)
         {
             status = global::Status.Hungry;
         }

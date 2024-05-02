@@ -1,9 +1,9 @@
 ﻿public abstract class Animal
 {
-    public abstract Status status { get; set; }
-    public abstract int hunger { get; set; }
-    public abstract string name { get; set; }
-    public abstract int age { get; set; }
+    protected Status status;
+    protected int hunger;
+    protected string name;
+    protected int age;
     public virtual void MakeSound()
     {
         // Реализация метода будет в подклассах
@@ -12,8 +12,24 @@
     {
         // Реализация метода будет в подклассах
     }
-    public virtual String Status()
+    public void Feed(int food)
+    {
+        hunger += food;
+    }
+    public Status GetStatus()
+    {
+        return status;
+    }
+    public String Status()
     {
         return $"Статус {status}\nГолод {hunger}" ;
+    }
+    public String getName()
+    {
+        return name;
+    }
+    public void setName(String name)
+    {
+        this.name = name;
     }
 }
