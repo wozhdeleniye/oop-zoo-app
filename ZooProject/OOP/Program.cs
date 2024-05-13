@@ -1,4 +1,5 @@
 ﻿using OOP;
+using OOP.Aviary;
 using System;
 
 namespace ZooProject
@@ -11,6 +12,7 @@ namespace ZooProject
             Timer timer = new Timer(zoo);
             Director dir = new Director(zoo);
 
+            int aviaryNumber = 0;
             while (true)
             {
                 Console.WriteLine("Выберете действие:");
@@ -19,6 +21,8 @@ namespace ZooProject
                 Console.WriteLine("3. Удалять посетителя/сотрудника/животного");
                 Console.WriteLine("4. Проверять статус посетителя/сотрудника/животного/зоопарка");
                 Console.WriteLine("5. Приказать животному подать голос");
+                Console.WriteLine("6. Остановить таймер");
+                Console.WriteLine("7. Возобновить таймер");
 
                 int answerNumber = Convert.ToInt32(Console.ReadLine());
 
@@ -79,33 +83,38 @@ namespace ZooProject
                                 if (answerGender == 1) gen = Gender.Female; 
                                 else if (answerGender == 2) gen = Gender.Female;
                                 Console.WriteLine("Выберите животное:");
-                                foreach (var animal in zoo.animals)
+                                foreach (var aviary in zoo.aviaries)
                                 {
-                                    Console.WriteLine($"{animal.getName()}, 1 - да, 2 - нет");
+                                    Console.WriteLine($"{aviary.getName()}, 1 - да, 2 - нет");
                                     int answerAnimalName = Convert.ToInt32(Console.ReadLine());
                                     if (answerAnimalName == 1) {
-                                        dir.AddStuff(answerName, gen, animal);
+                                        dir.AddStuff(answerName, gen, aviary);
                                         break;
                                     }
                                 }
                                 break;
                             case 3:
+                                
                                 Console.WriteLine("Выберете действие:");
                                 Console.WriteLine("1. Добавить капибару");
                                 Console.WriteLine("2. Добавить волка");
                                 Console.WriteLine("3. Добавить жирафа");
                                 int answerWhichAnimal = Convert.ToInt32(Console.ReadLine());
-                                int whichAnimal = 2;
+                                int whichAnimal = 4;
+                                AnimalType type = AnimalType.Capibara;
                                 switch (answerWhichAnimal)
                                 {
                                     case 1:
                                         whichAnimal = 1;
+                                        type = AnimalType.Capibara;
                                         break;
                                     case 2:
                                         whichAnimal = 2;
+                                        type = AnimalType.Wolf;
                                         break;
                                     case 3:
                                         whichAnimal = 3;
+                                        type = AnimalType.Giraffe;
                                         break;
                                     default:
                                         Console.WriteLine("Ошибка! Введено некорректное число.");
@@ -113,7 +122,28 @@ namespace ZooProject
                                 }
                                 Console.WriteLine($"Введите имя");
                                 String answerNameAnimal = Console.ReadLine();
-                                dir.AddAnimal(whichAnimal, answerNameAnimal);
+                                if (whichAnimal != 4)
+                                {
+                                    Console.WriteLine("Выберете вольер:");
+                                    foreach (var aviary in zoo.aviaries)
+                                    {
+                                        Console.WriteLine($"{aviary.getName()}, 1 - да, 2 - нет");
+                                        int answerAnimalName = Convert.ToInt32(Console.ReadLine());
+                                        if (answerAnimalName == 1)
+                                        {
+
+                                            if (aviary.getCapability(type))
+                                            {
+
+                                                dir.AddAnimal(whichAnimal, answerNameAnimal, aviary);
+                                            }
+                                            else Console.WriteLine("Вольер занят, нельзя добавить животное");
+                                            break;
+                                        }
+                                    }
+                                    
+                                    
+                                }
                                 break;
                             default:
                                 Console.WriteLine("Ошибка! Введено некорректное число.");
@@ -193,14 +223,14 @@ namespace ZooProject
                                             gen = Gender.Male;
                                             if (answerGender == 1) gen = Gender.Female;
                                             else if (answerGender == 2) gen = Gender.Female;
-                                            Console.WriteLine("Выберите животное:");
-                                            foreach (var animal in zoo.animals)
+                                            Console.WriteLine("Выберите вольер:");
+                                            foreach (var aviary in zoo.aviaries)
                                             {
-                                                Console.WriteLine($"{animal.getName()}, 1 - да, 2 - нет");
+                                                Console.WriteLine($"{aviary.getName()}, 1 - да, 2 - нет");
                                                 int answerAnimalName = Convert.ToInt32(Console.ReadLine());
                                                 if (answerAnimalName == 1)
                                                 {
-                                                    dir.EditStuff(answerName, gen, stuff, animal);
+                                                    dir.EditStuff(answerName, gen, stuff, aviary);
                                                     break;
                                                 }
                                             }
@@ -364,7 +394,21 @@ namespace ZooProject
                             }
                         }
                         break;
-
+                    case 6:
+                        timer.Pause();
+                        Console.WriteLine("Таймер остановлен");
+                        break;
+                    case 7:
+                        timer.Resume();
+                        Console.WriteLine("Таймер возобновлен");
+                        break;
+                    case 8:
+                        Console.WriteLine("Выберите название вольера:");
+                        String name = Console.ReadLine();
+                        if (name == null) name = "Вольер" + aviaryNumber;
+                        aviaryNumber += 1;
+                        dir.CreateAviary(name);
+                        break;
                     default:
                         Console.WriteLine("Ошибка! Введено некорректное число.");
                         break;
