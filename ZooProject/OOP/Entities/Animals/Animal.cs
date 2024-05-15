@@ -1,20 +1,20 @@
-﻿public abstract class Animal
+﻿using OOP.Aviary;
+
+public abstract class Animal
 {
     protected Status status;
     protected int hunger;
     protected string name;
     protected int age;
+    protected AnimalType type;
+    protected AnimalMealType mealType;
     public virtual void MakeSound()
     {
         // Реализация метода будет в подклассах
     }
-    public virtual void Update()
+    public virtual void Update(Aviary aviary)
     {
         // Реализация метода будет в подклассах
-    }
-    public void Feed(int food)
-    {
-        hunger += food;
     }
     public Status GetStatus()
     {
@@ -31,5 +31,13 @@
     public void setName(String name)
     {
         this.name = name;
+    }
+    public AnimalType getType(){
+        return type;
+    }
+    public void getFoodFromVisitor(int gluttony)
+    {
+        hunger += gluttony;
+
     }
 }

@@ -1,4 +1,6 @@
-﻿class Giraffe : Animal
+﻿using OOP.Aviary;
+
+class Giraffe : Animal
 {
     private string sound;
 
@@ -15,6 +17,8 @@
         sound = "Awwww! awww";
         name = newName;
         age = 0;
+        type = AnimalType.Giraffe;
+        mealType = AnimalMealType.Herbivore;
     }
 
     public override void MakeSound()
@@ -22,9 +26,24 @@
         Console.WriteLine(name + ": " + sound);
     }
 
-    public override void Update()
+    public override void Update(Aviary aviary)
     {
+        int food = 100;
         hunger -= 1;
+        
+        if (status == global::Status.Hungry)
+        {
+            if (aviary.getFood() >= food)
+            {
+                aviary.eatFood(food);
+                hunger += food;
+            }
+            else
+            {
+                aviary.eatFood(food);
+                hunger += aviary.getFood();
+            }
+        }
         if (hunger <= 70)
         {
             status = global::Status.Hungry;

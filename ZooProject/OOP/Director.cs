@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using OOP.Aviary;
 using ZooProject;
 
 namespace OOP
@@ -18,50 +12,59 @@ namespace OOP
             zoo = zooUser;
         }
 
-        public void AddAnimal(int i, String name)
+        public void AddAnimal(int i, String name, Aviary.Aviary aviary)
         {
             switch (i)
             {
                 case 1:
-                    zoo.animals.Add(new Capibara(name));
+                    Capibara capibara = new Capibara(name);
+                    aviary.AddAnimal(capibara);
+                    zoo.animals.Add(capibara);
                     break;
                 case 2:
-                    zoo.animals.Add(new Wolf(name));
+                    Wolf wolf = new Wolf(name);
+                    aviary.AddAnimal(wolf);
+                    zoo.animals.Add(wolf);
                     break;
                 case 3:
-                    zoo.animals.Add(new Giraffe(name));
+                    Giraffe giraffe = new Giraffe(name);
+                    aviary.AddAnimal(giraffe);
+                    zoo.animals.Add(giraffe);
                     break;
                 default:
                     Console.WriteLine("Incorrect input");
                     break;
             }
         }
-        public void AddStuff(String name,Gender gender, Animal animal)
+        public void AddStuff(String name, Gender gender, Aviary.Aviary aviary)
         {
-            zoo.people.Add(new Stuff(name, gender, animal));
-            zoo.stuff.Add(new Stuff(name, gender, animal));
+            zoo.people.Add(new Stuff(name, gender, aviary));
+            zoo.stuff.Add(new Stuff(name, gender, aviary));
         }
         public void AddVisitor(String name, Gender gender)
         {
-            zoo.people.Add(new Visitor(name, gender));
+            Visitor visitor = new Visitor(name, gender);
+            zoo.visitors.Add(visitor);
+            zoo.people.Add(visitor);
         }
         public void EditVisitor(String name, Gender gender, Human human)
         {
             human.setName(name);
             human.setGender(gender);
         }
-        public void EditStuff(String name, Gender gender, Stuff human, Animal hisAnimal)
+        public void EditStuff(String name, Gender gender, Stuff human, Aviary.Aviary aviary)
         {
             human.setName(name);
             human.setGender(gender);
-            human.hisAnimal = hisAnimal;
+            human.setHisAviary(aviary);
         }
         public void EditAnimal(String name, Animal animal)
         {
             animal.setName(name);
         }
-        public void DeleteVisitor(Human person)
+        public void DeleteVisitor(Visitor person)
         {
+            zoo.visitors.Remove(person);
             zoo.people.Remove(person);
         }
         public void DeleteStuff(Stuff person)
@@ -71,13 +74,26 @@ namespace OOP
         public void DeleteAnimal(Animal animal)
         {
             zoo.animals.Remove(animal);
-            foreach(var stuff in zoo.stuff)
+            foreach(var aviary in zoo.aviaries)
             {
-                if(stuff.hisAnimal == animal)
-                {
-                    stuff.hisAnimal = null;
-                }
+                aviary.RemoveAnimal(animal);
             }
+        }
+
+        public void CreateAviary(String name)
+        {
+            zoo.aviaries.Add(new Aviary.Aviary(name));
+        }
+
+        public void GetAviaryStatus(Aviary.Aviary aviary)
+        {
+            Console.WriteLine(aviary.DisplayStatus());
+        }
+        
+        public void AddFood(string name, int gluttony)
+        {
+            zoo.food.Add(name, gluttony);
+            Console.WriteLine($"Добавлена еда {name}, сытность {gluttony}");
         }
     }
 }

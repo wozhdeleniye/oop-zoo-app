@@ -1,6 +1,6 @@
-﻿enum AnimalType
+﻿public enum AnimalType
 {
     Capibara,
     Wolf,
-    Bear
+    Giraffe
 }
