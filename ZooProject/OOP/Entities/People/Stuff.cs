@@ -22,7 +22,7 @@ public class Stuff : Human
                 needFood = true;
             }
         });
-        if((needFood) || (hisAviary.getFood()<100))
+        if((needFood) && (hisAviary.getFood()<300))
         {
             hisAviary.putFood(600);
         }

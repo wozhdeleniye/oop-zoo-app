@@ -43,7 +43,9 @@ namespace OOP
         }
         public void AddVisitor(String name, Gender gender)
         {
-            zoo.people.Add(new Visitor(name, gender));
+            Visitor visitor = new Visitor(name, gender);
+            zoo.visitors.Add(visitor);
+            zoo.people.Add(visitor);
         }
         public void EditVisitor(String name, Gender gender, Human human)
         {
@@ -60,8 +62,9 @@ namespace OOP
         {
             animal.setName(name);
         }
-        public void DeleteVisitor(Human person)
+        public void DeleteVisitor(Visitor person)
         {
+            zoo.visitors.Remove(person);
             zoo.people.Remove(person);
         }
         public void DeleteStuff(Stuff person)
@@ -73,10 +76,7 @@ namespace OOP
             zoo.animals.Remove(animal);
             foreach(var aviary in zoo.aviaries)
             {
-                if(aviary.animalsList().Exists(p => p == animal))
-                {
-                    aviary.RemoveAnimal(animal);
-                }
+                aviary.RemoveAnimal(animal);
             }
         }
 
@@ -85,17 +85,15 @@ namespace OOP
             zoo.aviaries.Add(new Aviary.Aviary(name));
         }
 
-        /*public void AddAnimalToAviary(Animal animal, Aviary.Aviary aviary)
-        {
-            if (aviary.getCapability(animal.getType()))
-            {
-                aviary.AddAnimal(animal);
-            }
-        }*/
-
         public void GetAviaryStatus(Aviary.Aviary aviary)
         {
-            aviary.GetStatus();
+            Console.WriteLine(aviary.DisplayStatus());
+        }
+        
+        public void AddFood(string name, int gluttony)
+        {
+            zoo.food.Add(name, gluttony);
+            Console.WriteLine($"Добавлена еда {name}, сытность {gluttony}");
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace ZooProject
+﻿using OOP.Aviary;
+
+namespace ZooProject
 {
     public class Timer
     {
@@ -45,6 +47,28 @@
                 foreach (var aviary in zoo.aviaries)
                 {
                     aviary.changeLocation();
+                }
+            }
+
+            if((zoo.animals.Count > 0) && ( zoo.aviaries.Count()>0))
+            {
+                foreach (var visitor in zoo.visitors)
+                {
+                    value = rnd.Next(0, 5);
+                    if (value == 0)
+                    {
+                        value = rnd.Next(0, zoo.aviaries.Count()-1);
+                        var aviary = zoo.aviaries[value];
+                        if (aviary.animalsList().Count() > 0) 
+                        {
+                            value = rnd.Next(0, aviary.animalsList().Count()-1);
+                            if (aviary.animalsListForVisitors().ElementAt(value).Value)//можно добавить проверку на то, голоден ли зверёк
+                            {
+                                int randomFood = rnd.Next(0, zoo.food.Count() - 1);
+                                visitor.Feed(aviary.animalsListForVisitors().ElementAt(value).Key, zoo.food.ElementAt(randomFood).Value);
+                            }
+                        }
+                    }
                 }
             }
         }

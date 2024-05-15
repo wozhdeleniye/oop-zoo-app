@@ -18,6 +18,7 @@ class Giraffe : Animal
         name = newName;
         age = 0;
         type = AnimalType.Giraffe;
+        mealType = AnimalMealType.Herbivore;
     }
 
     public override void MakeSound()

@@ -7,6 +7,7 @@ public abstract class Animal
     protected string name;
     protected int age;
     protected AnimalType type;
+    protected AnimalMealType mealType;
     public virtual void MakeSound()
     {
         // Реализация метода будет в подклассах
@@ -33,5 +34,10 @@ public abstract class Animal
     }
     public AnimalType getType(){
         return type;
+    }
+    public void getFoodFromVisitor(int gluttony)
+    {
+        hunger += gluttony;
+
     }
 }

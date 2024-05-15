@@ -19,14 +19,15 @@ namespace OOP.Aviary
         public Aviary(String name)
         {
             Name = name;
-            Food = 0;
+            Food = 500;
+            maxCapacity = 15;
             animals = new Dictionary<Animal, bool>();
         }
 
         public void AddAnimal(Animal animal)
         {
             animals.Add(animal, true);
-            Console.WriteLine($"{animal.getName} добавлен в вольер.");
+            Console.WriteLine($"{animal.getName()} добавлен в вольер.");
         }
 
         public void RemoveAnimal(Animal animal)
@@ -34,29 +35,23 @@ namespace OOP.Aviary
             if (animals.Keys.Contains(animal))
             {
                 animals.Remove(animal);
-                Console.WriteLine($"{animal.getName} удален из вольера.");
+                Console.WriteLine($"{animal.getName()} удален из вольера.");
             }
             else
             {
-                Console.WriteLine($"{animal.getName} не найден в вольере.");
+                Console.WriteLine($"{animal.getName()} не найден в вольере.");
             }
         }
 
-        public void DisplayStatus()
-        {
-            Console.WriteLine("Животные в вольере:");
-            foreach (var animal in animals)
-            {
-                Console.WriteLine(animal);
-            }
-        }
-
-        public string GetStatus()
+        public string DisplayStatus()
         {
             String animalsStatus = "";
-            foreach(var animal in animals)
+            foreach (var animal in animals)
             {
-                animalsStatus += animal.Key.getName() + "\n";
+                string inAviaryString;
+                if (animal.Value) inAviaryString = " В вольере";
+                else inAviaryString = " Не в вольере";
+                animalsStatus += animal.Key.getName() + $" {inAviaryString}\n";
             }
             return "Название: " + Name + "\nКоличество еды:" + Food + "\nЖивотные:\n" + animalsStatus;
         }
@@ -64,14 +59,13 @@ namespace OOP.Aviary
         public void changeLocation()
         {
             Random rnd = new Random();
-            int value = rnd.Next(0, 10);
+            int value = rnd.Next(0, 1);
             if(value == 0)
             {
-                foreach (var animal in animals)
-                {
-                    if (animal.Value) animals[animal.Key] = false;
-                    else animals[animal.Key] = true;
-                }
+                value = rnd.Next(0, animals.Count()-1);
+
+                if (animals.ElementAt(value).Value) animals[animals.ElementAt(value).Key] = false;
+                else animals[animals.ElementAt(value).Key] = true;
             }
         }
 
@@ -79,24 +73,36 @@ namespace OOP.Aviary
         {
             return animals.Keys.ToList();
         }
+
+        public Dictionary<Animal, bool> animalsListForVisitors()
+        {
+            return animals;
+        }
+
         public bool getCapability(AnimalType type)
         {
-            if (animals.First().Key.getType() == type)
+            if (animals.Count == 0)
             {
-                if (animals.Count == 0)
+                return true;
+            }
+            else
+            {
+                if (animals.First().Key.getType() == type)
                 {
-                    return true;
-                }
-                else
-                {
-                    if (maxCapacity + getAnimalSize(animals.First().Key.getType()) <= maxCapacity)
+                    int filled = 0;
+                    foreach(var animal in animals)
+                    {
+                        filled += getAnimalSize(animal.Key.getType());
+                    }
+                    if (filled + getAnimalSize(animals.First().Key.getType()) <= maxCapacity)
                     {
                         return true;
                     }
                     else return false;
                 }
+                else return false;
             }
-            else return false;
+            
         }
         private int getAnimalSize(AnimalType type)
         {

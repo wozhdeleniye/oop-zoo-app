@@ -12,11 +12,9 @@ namespace OOP.Aviary
         int maxCapacity { get; }
         void AddAnimal(Animal animal);
         void RemoveAnimal(Animal animal);
-        void DisplayStatus();
+        string DisplayStatus();
         void putFood(int food);
         void eatFood(int food);
         string getName();
-
-        String GetStatus();
     }
 }

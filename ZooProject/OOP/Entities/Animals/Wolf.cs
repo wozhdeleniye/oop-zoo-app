@@ -18,6 +18,7 @@ class Wolf : Animal
         name = newName;
         age = 0;
         type = AnimalType.Wolf;
+        mealType = AnimalMealType.Predator;
     }
 
     public override void MakeSound()

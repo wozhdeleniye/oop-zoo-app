@@ -18,6 +18,7 @@ class Capibara : Animal
         name = newName;
         age = 0;
         type = AnimalType.Capibara;
+        mealType = AnimalMealType.Herbivore;
     }
 
     public override void MakeSound()

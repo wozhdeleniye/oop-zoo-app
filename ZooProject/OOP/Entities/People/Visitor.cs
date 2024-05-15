@@ -2,6 +2,7 @@
 
 public class Visitor : Human
 {
+    int cash;
     public Visitor(String name, Gender gender)
     {
         this.name = name;
@@ -12,5 +13,10 @@ public class Visitor : Human
     {
         if (gender == Gender.Male) return "- " + name + "- Мужчина";
         else return "- " + name + "\n- Женщина";
+    }
+
+    public void Feed(Animal animal, int gluttony)
+    {
+        animal.getFoodFromVisitor(gluttony);
     }
 }
